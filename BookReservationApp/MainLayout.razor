@@ -1,0 +1,42 @@
+﻿@inherits LayoutComponentBase
+
+<MudThemeProvider/>
+<MudDialogProvider/>
+<MudSnackbarProvider/>
+
+<MudLayout>
+    <MudAppBar>
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+    </MudAppBar>
+    <MudDrawer @bind-Open="@_drawerOpen">
+        <MudNavMenu Width="50px">
+            <MudText Typo="Typo.h6" Class="px-4">Svečias</MudText>
+            <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">Vartotojas</MudText>
+            <MudDivider Class="my-2"/>
+            <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Dashboard">Knygos</MudNavLink>
+            <MudNavLink Href="/favorites" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Storage">Išsaugoti</MudNavLink>
+            <MudNavGroup Title="Autorizacija" Icon="@Icons.Material.Filled.Settings" @bind-Open="@_navOpen" OnClick="@(() => NavToggle())">
+                <MudNavLink Href="/login" Icon="@Icons.Material.Filled.Lock" IconColor="Color.Success">Prisijungti</MudNavLink>
+                <MudNavLink Href="/registration" Icon="@Icons.Material.Filled.People" IconColor="Color.Info">Užsiregistruoti</MudNavLink>
+            </MudNavGroup>
+        </MudNavMenu>
+    </MudDrawer>
+    <MudMainContent>
+        @Body
+    </MudMainContent>
+</MudLayout>
+
+@code {
+    bool _drawerOpen = true;
+    bool _navOpen = true;
+
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+
+    void NavToggle()
+    {
+        _navOpen = !_navOpen;
+    }
+}

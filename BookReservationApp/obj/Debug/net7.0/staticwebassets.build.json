@@ -1,0 +1,54 @@
+{
+  "Version": 1,
+  "Hash": "N/Y3jr+U+I+Vbjv98O4lXqKIgLwGQahV8f9AC6mxyI8=",
+  "Source": "BookReservationApp",
+  "BasePath": "_content/BookReservationApp",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "BookReservationApp\\wwwroot",
+      "Source": "BookReservationApp",
+      "ContentRoot": "C:\\Users\\Clyde\\RiderProjects\\BookReservationApp\\BookReservationApp\\wwwroot\\",
+      "BasePath": "_content/BookReservationApp",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\Clyde\\.nuget\\packages\\mudblazor\\6.1.7\\staticwebassets\\MudBlazor.min.css",
+      "SourceId": "MudBlazor",
+      "SourceType": "Package",
+      "ContentRoot": "C:\\Users\\Clyde\\.nuget\\packages\\mudblazor\\6.1.7\\staticwebassets\\",
+      "BasePath": "_content/MudBlazor",
+      "RelativePath": "MudBlazor.min.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\Clyde\\.nuget\\packages\\mudblazor\\6.1.7\\staticwebassets\\MudBlazor.min.css"
+    },
+    {
+      "Identity": "C:\\Users\\Clyde\\.nuget\\packages\\mudblazor\\6.1.7\\staticwebassets\\MudBlazor.min.js",
+      "SourceId": "MudBlazor",
+      "SourceType": "Package",
+      "ContentRoot": "C:\\Users\\Clyde\\.nuget\\packages\\mudblazor\\6.1.7\\staticwebassets\\",
+      "BasePath": "_content/MudBlazor",
+      "RelativePath": "MudBlazor.min.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\Clyde\\.nuget\\packages\\mudblazor\\6.1.7\\staticwebassets\\MudBlazor.min.js"
+    }
+  ]
+}
