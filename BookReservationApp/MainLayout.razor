@@ -15,7 +15,7 @@
             <MudDivider Class="my-2"/>
             <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Dashboard">Knygos</MudNavLink>
             <MudNavLink Href="/favorites" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Storage">Išsaugoti</MudNavLink>
-            <MudNavGroup Title="Autorizacija" Icon="@Icons.Material.Filled.Settings" @bind-Open="@_navOpen" OnClick="@(() => NavToggle())">
+            <MudNavGroup Title="Autorizacija" Icon="@Icons.Material.Filled.Settings" @bind-Open="@_navOpen" OnClick="@NavToggle">
                 <MudNavLink Href="/login" Icon="@Icons.Material.Filled.Lock" IconColor="Color.Success">Prisijungti</MudNavLink>
                 <MudNavLink Href="/registration" Icon="@Icons.Material.Filled.People" IconColor="Color.Info">Užsiregistruoti</MudNavLink>
             </MudNavGroup>
