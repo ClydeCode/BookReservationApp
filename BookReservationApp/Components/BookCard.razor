@@ -1,0 +1,31 @@
+﻿<MudContainer MaxWidth="MaxWidth.False" Class="d-flex gap-10 flex-wrap">
+    <MudCard Width="300px">
+        <MudCardMedia Image="https://pixlr.com/images/index/remove-bg.webp" Height="200"/>
+        <MudCardContent>
+            <MudText Typo="Typo.h5">Old Paint</MudText>
+            <MudText Typo="Typo.body2">Old paint found on a stone house door.</MudText>
+            <MudText Typo="Typo.body2">This photo was taken in a small village in Istra Croatia.</MudText>
+        </MudCardContent>
+        <MudCardActions>
+            <MudIconButton Icon="@_bookmarkIcon" OnClick="BookmarkToggle" Color="Color.Primary" aria-label="add to favorite"></MudIconButton>
+            <MudIconButton Icon="@_favoriteIcon" OnClick="FavoriteToggle" Color="Color.Secondary" aria-label="add to favorite"></MudIconButton>
+        </MudCardActions>
+    </MudCard>
+</MudContainer>
+
+@code {
+    string _favoriteIcon = Icons.Material.Filled.FavoriteBorder;
+    string _bookmarkIcon = Icons.Material.Filled.BookmarkBorder;
+
+    void FavoriteToggle()
+    {
+        _favoriteIcon = _favoriteIcon == Icons.Material.Filled.FavoriteBorder 
+            ? Icons.Material.Filled.Favorite : Icons.Material.Filled.FavoriteBorder;
+    }
+
+    void BookmarkToggle()
+    {
+        _bookmarkIcon = _bookmarkIcon == Icons.Material.Filled.BookmarkBorder
+            ? Icons.Material.Filled.Bookmark : Icons.Material.Filled.BookmarkBorder;
+    }
+}
