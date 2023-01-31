@@ -1,8 +1,32 @@
 ﻿@page "/"
-@using BookReservationApp.Components;
+@using BookReservationApp.Components
+@using BookReservationApp.Data
+@using BookReservationApp.Data.Models
+@using Microsoft.EntityFrameworkCore
+@inject IDbContextFactory<ContextDb> DBFactory
 
 <MudText Typo="Typo.h4" Class="pb-3">Knygos</MudText>
 
-<BookCard />
+@foreach (var book in Books)
+{
+	<BookCard 
+		Id=@book.Id
+		Title=@book.Title
+		Description=@book.Description
+	/>
+}
 
+@code {
+	IEnumerable<BookModel>? Books;
+
+	protected override async Task OnInitializedAsync()
+	{
+		using var context = DBFactory.CreateDbContext();
+
+		if (context is not null && context.Books is not null) 
+			Books = context.Books.ToList();
+
+		await base.OnInitializedAsync();
+	}
+}
 
