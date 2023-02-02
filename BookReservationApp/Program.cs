@@ -11,7 +11,8 @@ builder.Services.AddMudServices();
 builder.Services.AddDbContextFactory<ContextDb>(opt => 
     opt.UseSqlServer(builder.Configuration.GetConnectionString("DbContext")));
 
-builder.Services.AddDefaultIdentity<UserModel>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ContextDb>();
+builder.Services.AddDefaultIdentity<UserModel>(options => options.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<ContextDb>();
+builder.Services.AddScoped<TokenProvider>();
 
 var app = builder.Build();
 
@@ -26,7 +27,10 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
 
+app.MapRazorPages();
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 
