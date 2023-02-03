@@ -1,8 +1,12 @@
 ﻿@inherits LayoutComponentBase
+@using BookReservationApp.Data.Models;
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Identity;
 
 <MudThemeProvider/>
 <MudDialogProvider/>
 <MudSnackbarProvider/>
+
 
 <MudLayout>
     <MudAppBar>
@@ -10,15 +14,40 @@
     </MudAppBar>
     <MudDrawer @bind-Open="@_drawerOpen">
         <MudNavMenu Width="50px">
-            <MudText Typo="Typo.h6" Class="px-4">Svečias</MudText>
-            <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">Vartotojas</MudText>
+            <MudText Typo="Typo.h6" Class="px-4">    
+                <AuthorizeView>
+                    <Authorized>
+                        @context.User.Identity.Name
+                    </Authorized>
+                    <NotAuthorized>
+                        Svečias
+                    </NotAuthorized>
+                </AuthorizeView>
+            </MudText>
+            <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">
+                <AuthorizeView Roles="Admin">
+                    <Authorized>
+                        Administratorius
+                    </Authorized>
+                    <NotAuthorized>
+                        Vartotojas
+                    </NotAuthorized>
+                </AuthorizeView>
+            </MudText>
             <MudDivider Class="my-2"/>
             <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Dashboard">Knygos</MudNavLink>
             <MudNavLink Href="/reservations" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Bookmarks">Rezervuoti</MudNavLink>
             <MudNavLink Href="/favorites" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Storage">Išsaugoti</MudNavLink>
             <MudNavGroup Title="Autorizacija" Icon="@Icons.Material.Filled.Settings" @bind-Open="@_navOpen" OnClick="@NavToggle">
-                <MudNavLink Href="/account/login" Icon="@Icons.Material.Filled.Lock" IconColor="Color.Success">Prisijungti</MudNavLink>
-                <MudNavLink Href="/account/register" Icon="@Icons.Material.Filled.People" IconColor="Color.Info">Užsiregistruoti</MudNavLink>
+                <AuthorizeView>
+                    <Authorized>
+                        <MudNavLink Href="/account/logout" Icon="@Icons.Material.Filled.Lock" IconColor="Color.Error">Atsijungti</MudNavLink>
+                    </Authorized>
+                    <NotAuthorized>
+                        <MudNavLink Href="/account/login" Icon="@Icons.Material.Filled.Lock" IconColor="Color.Success">Prisijungti</MudNavLink>
+                        <MudNavLink Href="/account/register" Icon="@Icons.Material.Filled.People" IconColor="Color.Info">Užsiregistruoti</MudNavLink>
+                    </NotAuthorized>
+                </AuthorizeView>
             </MudNavGroup>
         </MudNavMenu>
     </MudDrawer>
@@ -26,6 +55,7 @@
         @Body
     </MudMainContent>
 </MudLayout>
+
 
 @code {
     bool _drawerOpen = true;
