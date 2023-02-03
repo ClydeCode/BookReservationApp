@@ -1,0 +1,60 @@
+﻿@page "/reservations"
+@using Microsoft.AspNetCore.Components.Authorization;
+@using BookReservationApp.Pages.Account
+@using BookReservationApp.Components
+@using BookReservationApp.Data
+@using BookReservationApp.Data.Models
+@using Microsoft.EntityFrameworkCore
+@using System.Security.Claims;
+@inject IDbContextFactory<ContextDb> DBFactory
+
+<CascadingAuthenticationState>
+	<AuthorizeView>
+		<Authorized>
+			<MudText Typo="Typo.h4" Class="pb-3">Rezervacijos</MudText>
+
+			@foreach (var book in Books)
+			{
+				<BookCard 
+					  Id=@book.Id
+					  Title=@book.Title
+					  Description=@book.Description
+					  ReservedBy=@book.ReservedBy 
+				/>
+			}
+		</Authorized>
+		<NotAuthorized>
+			<RedirectToLogin />
+		</NotAuthorized>
+	</AuthorizeView>
+</CascadingAuthenticationState>
+
+@code {
+	[CascadingParameter]
+	private Task<AuthenticationState> authenticationStateTask { get; set; }
+	private ClaimsPrincipal user { get; set; }
+
+	IEnumerable<BookModel>? Books;
+
+	protected override async Task OnInitializedAsync()
+	{
+		authenticateUser();
+
+		var userId = user.FindFirstValue(ClaimTypes.NameIdentifier);
+
+		using var context = DBFactory.CreateDbContext();
+
+		if (context is not null && context.Books is not null)
+			Books = context.Books
+				.Where(book => book.ReservedBy == userId)
+				.ToList();
+
+		await base.OnInitializedAsync();
+	}
+
+	async void authenticateUser()
+	{
+		var authState = await authenticationStateTask;
+		user = authState.User;
+	}
+}

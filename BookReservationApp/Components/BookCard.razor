@@ -1,31 +1,100 @@
-﻿<MudContainer MaxWidth="MaxWidth.False" Class="d-flex gap-10 flex-wrap">
+﻿@using BookReservationApp.Data.Models;
+@using Microsoft.AspNetCore.Authorization;
+@using Microsoft.AspNetCore.Components.Authorization;
+@using System.Security.Claims;
+@using Microsoft.EntityFrameworkCore
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IDbContextFactory<ContextDb> DBFactory
+
+<MudContainer MaxWidth="MaxWidth.False" Class="d-flex gap-10 flex-wrap">
     <MudCard Width="300px">
         <MudCardMedia Image="https://pixlr.com/images/index/remove-bg.webp" Height="200"/>
         <MudCardContent>
-            <MudText Typo="Typo.h5">Old Paint</MudText>
-            <MudText Typo="Typo.body2">Old paint found on a stone house door.</MudText>
-            <MudText Typo="Typo.body2">This photo was taken in a small village in Istra Croatia.</MudText>
+            <MudText Typo="Typo.h5">@Title</MudText>
+            <MudText Typo="Typo.body2">@Description</MudText>
         </MudCardContent>
         <MudCardActions>
-            <MudIconButton Icon="@_bookmarkIcon" OnClick="BookmarkToggle" Color="Color.Primary" aria-label="add to favorite"></MudIconButton>
+            <MudIconButton Icon="@_bookmarkIcon" OnClick="ReserveToggle" Color="Color.Primary" aria-label="add to reservations"></MudIconButton>
             <MudIconButton Icon="@_favoriteIcon" OnClick="FavoriteToggle" Color="Color.Secondary" aria-label="add to favorite"></MudIconButton>
         </MudCardActions>
     </MudCard>
 </MudContainer>
 
 @code {
+    [Parameter]
+    public int Id { get; set; }
+    [Parameter]
+    public string? Title { get; set; }
+    [Parameter]
+    public string? Description { get; set; }
+    [Parameter]
+    public string? ReservedBy { get; set; }
+
     string _favoriteIcon = Icons.Material.Filled.FavoriteBorder;
     string _bookmarkIcon = Icons.Material.Filled.BookmarkBorder;
 
-    void FavoriteToggle()
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+    private ClaimsPrincipal user { get; set; }
+
+    protected override void OnInitialized()
     {
-        _favoriteIcon = _favoriteIcon == Icons.Material.Filled.FavoriteBorder 
-            ? Icons.Material.Filled.Favorite : Icons.Material.Filled.FavoriteBorder;
+        authenticateUser();
+
+        _bookmarkIcon = ReservedBy != null ?
+            Icons.Material.Filled.Bookmark : Icons.Material.Filled.BookmarkBorder;
+
+        base.OnInitialized();
     }
 
-    void BookmarkToggle()
+    async void authenticateUser()
     {
-        _bookmarkIcon = _bookmarkIcon == Icons.Material.Filled.BookmarkBorder
-            ? Icons.Material.Filled.Bookmark : Icons.Material.Filled.BookmarkBorder;
+        var authState = await authenticationStateTask;
+        user = authState.User;
+    }
+
+    void FavoriteToggle()
+    {
+        if (user.Identity.IsAuthenticated)
+        {
+            _favoriteIcon = _favoriteIcon == Icons.Material.Filled.FavoriteBorder 
+                ? Icons.Material.Filled.Favorite : Icons.Material.Filled.FavoriteBorder;
+        }
+    }
+
+    async void ReserveToggle()
+    {
+        if (user.Identity.IsAuthenticated)
+        {
+            using var context = DBFactory.CreateDbContext();
+            var userId = user.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (ReservedBy == null)
+            {
+                var entity = context.Books.FirstOrDefault(item => item.Id == Id);
+
+                context.Entry(entity).CurrentValues.SetValues(entity.ReservedBy = userId);
+
+                context.SaveChanges();
+
+                ReservedBy = userId;
+                _bookmarkIcon = Icons.Material.Filled.Bookmark;
+            }
+            else if (ReservedBy == userId)
+            {
+                var entity = context.Books.FirstOrDefault(item => item.Id == Id);
+
+                var entry = context.Entry(entity).CurrentValues;
+
+                entity.ReservedBy = null;
+
+                entry.SetValues(entity);
+
+                context.SaveChanges();
+
+                ReservedBy = null;
+                _bookmarkIcon = Icons.Material.Filled.BookmarkBorder;
+            }
+        }
     }
 }
