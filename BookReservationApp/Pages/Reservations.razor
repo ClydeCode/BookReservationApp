@@ -38,7 +38,7 @@
 
 	protected override async Task OnInitializedAsync()
 	{
-		authenticateUser();
+		AuthenticateUser();
 
 		var userId = user.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -52,7 +52,7 @@
 		await base.OnInitializedAsync();
 	}
 
-	async void authenticateUser()
+	async void AuthenticateUser()
 	{
 		var authState = await authenticationStateTask;
 		user = authState.User;
