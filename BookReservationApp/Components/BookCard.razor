@@ -36,13 +36,15 @@
     [CascadingParameter]
     private Task<AuthenticationState> authenticationStateTask { get; set; }
     private ClaimsPrincipal user { get; set; }
+    private string userId { get; set; }
 
     protected override void OnInitialized()
     {
         authenticateUser();
 
-        _bookmarkIcon = ReservedBy != null ?
-            Icons.Material.Filled.Bookmark : Icons.Material.Filled.BookmarkBorder;
+        _bookmarkIcon = ReservedBy == null ?
+            Icons.Material.Filled.BookmarkBorder : ReservedBy == userId ?
+                Icons.Material.Filled.Bookmark : Icons.Material.Filled.Bookmarks;
 
         base.OnInitialized();
     }
@@ -51,6 +53,8 @@
     {
         var authState = await authenticationStateTask;
         user = authState.User;
+
+        userId = user.FindFirstValue(ClaimTypes.NameIdentifier);
     }
 
     void FavoriteToggle()
@@ -67,7 +71,6 @@
         if (user.Identity.IsAuthenticated)
         {
             using var context = DBFactory.CreateDbContext();
-            var userId = user.FindFirstValue(ClaimTypes.NameIdentifier);
 
             if (ReservedBy == null)
             {
