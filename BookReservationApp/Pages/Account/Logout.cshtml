@@ -7,8 +7,8 @@
     @{
         if (User.Identity.IsAuthenticated)
         {
-            <form class="form-inline" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/reservations")" method="post">
-                    <div class="d-flex justify-content-center align-items-center flex-column">
+            <form class="form-inline" asp-page="/Account/Logout" method="post">
+                <div class="d-flex justify-content-center align-items-center flex-column mt-3">
                         <p>Ar tikrai norite atsijungti?</p>
                         <button type="submit" class="nav-link btn btn-danger text-white">Atsijungti</button>
                     </div>
