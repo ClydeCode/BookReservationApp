@@ -6,23 +6,24 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IDbContextFactory<ContextDb> DBFactory
 
-<MudContainer MaxWidth="MaxWidth.False" Class="d-flex gap-10 flex-wrap">
-    <MudCard Width="300px">
-        <MudCardMedia Image="https://pixlr.com/images/index/remove-bg.webp" Height="200"/>
-        <MudCardContent>
-            <MudText Typo="Typo.h5">@Title</MudText>
-            <MudText Typo="Typo.body2">@Description</MudText>
-        </MudCardContent>
-        <MudCardActions>
-            <MudIconButton Icon="@_bookmarkIcon" OnClick="ReserveToggle" Color="Color.Primary" aria-label="add to reservations"></MudIconButton>
-            <MudIconButton Icon="@_favoriteIcon" OnClick="FavoriteToggle" Color="Color.Secondary" aria-label="add to favorite"></MudIconButton>
-        </MudCardActions>
-    </MudCard>
-</MudContainer>
+
+<MudCard Width="300px">
+    <MudCardMedia Image=@ImageURL Height="200"/>
+    <MudCardContent>
+        <MudText Typo="Typo.h5">@Title</MudText>
+        <MudText Typo="Typo.body2">@Description</MudText>
+    </MudCardContent>
+    <MudCardActions>
+        <MudIconButton Icon="@_bookmarkIcon" OnClick="ReserveToggle" Color="Color.Primary" aria-label="add to reservations"></MudIconButton>
+        <MudIconButton Icon="@_favoriteIcon" OnClick="FavoriteToggle" Color="Color.Secondary" aria-label="add to favorite"></MudIconButton>
+    </MudCardActions>
+</MudCard>
 
 @code {
     [Parameter]
     public int Id { get; set; }
+    [Parameter]
+    public string? ImageURL { get; set; }
     [Parameter]
     public string? Title { get; set; }
     [Parameter]
