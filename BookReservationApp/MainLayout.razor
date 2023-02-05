@@ -2,6 +2,8 @@
 @using BookReservationApp.Data.Models;
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Identity;
+@using BookReservationApp.Components
+@inject IDialogService DialogService
 
 <MudThemeProvider/>
 <MudDialogProvider/>
@@ -11,6 +13,11 @@
 <MudLayout>
     <MudAppBar>
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+        <AuthorizeView Roles="Admin">
+            <Authorized>
+                <MudButton Class="ml-auto" Variant="Variant.Filled" Color="Color.Secondary" OnClick=@HandleClick>Pridėti knygą</MudButton>
+            </Authorized>
+        </AuthorizeView>
     </MudAppBar>
     <MudDrawer @bind-Open="@_drawerOpen">
         <MudNavMenu Width="50px">
@@ -69,5 +76,12 @@
     void NavToggle()
     {
         _navOpen = !_navOpen;
+    }
+
+    void HandleClick()
+    {
+        DialogOptions closeOnEscapeKey = new DialogOptions() { CloseOnEscapeKey = true };
+
+        DialogService.Show<CreateBookDialog>("Pridėti knygą", closeOnEscapeKey);
     }
 }
