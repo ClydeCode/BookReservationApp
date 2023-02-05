@@ -7,15 +7,18 @@
 
 <MudText Typo="Typo.h4" Class="pb-3">Knygos</MudText>
 
-@foreach (var book in Books)
-{
-	<BookCard 
-		Id=@book.Id
-		Title=@book.Title
-		Description=@book.Description
-		ReservedBy=@book.ReservedBy
-	/>
-}
+<MudContainer MaxWidth="MaxWidth.False" Class="d-flex gap-10 flex-wrap">
+	@foreach (var book in Books)
+	{
+		<BookCard 
+			Id=@book.Id
+			ImageURL=@book.ImageURL
+			Title=@book.Title
+			Description=@book.Description
+			ReservedBy=@book.ReservedBy
+		/>
+	}
+</MudContainer>
 
 @code {
 	IEnumerable<BookModel>? Books;
