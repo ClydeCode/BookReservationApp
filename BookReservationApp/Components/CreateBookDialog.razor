@@ -1,0 +1,42 @@
+﻿@using BookReservationApp.Data.Models;
+@using Microsoft.AspNetCore.Components.Authorization;
+@using Microsoft.EntityFrameworkCore
+@inject IDbContextFactory<ContextDb> DBFactory
+
+<MudDialog>
+    <DialogContent>
+        <MudTextField @bind-Value=@ImageURL Label="Nuotrauka (URL)"></MudTextField>
+        <MudTextField @bind-Value=@Title Label="Pavadinimas"></MudTextField>
+        <MudTextField @bind-Value=@Description Label="Aprašymas"></MudTextField>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">Ok</MudButton>
+    </DialogActions>
+</MudDialog>
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    public string ImageURL { get; set; }
+    public string Title { get; set; }
+    public string Description { get; set; }
+
+    void Submit() {
+        using var context = DBFactory.CreateDbContext();
+
+        var book = new BookModel
+        {
+            ImageURL = ImageURL,
+            Title = Title,
+            Description = Description,
+            CreatedAt = DateTime.Now
+        };
+
+        context.Books.Add(book);
+        context.SaveChanges();
+
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+
+    void Cancel() => MudDialog.Cancel();
+}
