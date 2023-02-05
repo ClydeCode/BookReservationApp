@@ -3,11 +3,11 @@
 @using Microsoft.EntityFrameworkCore
 @inject IDbContextFactory<ContextDb> DBFactory
 
-<MudDialog>
+<MudDialog Style="width: 500px">
     <DialogContent>
         <MudTextField @bind-Value=@ImageURL Label="Nuotrauka (URL)"></MudTextField>
         <MudTextField @bind-Value=@Title Label="Pavadinimas"></MudTextField>
-        <MudTextField @bind-Value=@Description Label="Aprašymas"></MudTextField>
+        <MudTextField @bind-Value=@Description Label="Aprašymas" Lines="5"></MudTextField>
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="Cancel">Cancel</MudButton>
