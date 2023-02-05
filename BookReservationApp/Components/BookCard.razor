@@ -6,7 +6,6 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IDbContextFactory<ContextDb> DBFactory
 
-
 <MudCard Width="300px">
     <MudCardMedia Image=@ImageURL Height="200"/>
     <MudCardContent>
@@ -16,8 +15,22 @@
     <MudCardActions>
         <MudIconButton Icon="@_bookmarkIcon" OnClick="ReserveToggle" Color="Color.Primary" aria-label="add to reservations"></MudIconButton>
         <MudIconButton Icon="@_favoriteIcon" OnClick="FavoriteToggle" Color="Color.Secondary" aria-label="add to favorite"></MudIconButton>
+        <AuthorizeView Roles="Admin">
+            <Authorized>
+                <MudIconButton OnClick="OnButtonClicked" Color="Color.Secondary" aria-label="delete">x</MudIconButton>
+            </Authorized>
+        </AuthorizeView>
     </MudCardActions>
 </MudCard>
+
+<MudMessageBox @ref="mbox" Title="Ispėjimas" CancelText="Cancel" Style="width: 500px">
+    <MessageContent>
+        Ar tikrai <b><i>norite</i></b> ištrinti?
+    </MessageContent>
+    <YesButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Error" StartIcon="@Icons.Material.Filled.DeleteForever">Ištrinti</MudButton>
+    </YesButton>
+</MudMessageBox>
 
 @code {
     [Parameter]
@@ -33,6 +46,8 @@
 
     string _favoriteIcon = Icons.Material.Filled.FavoriteBorder;
     string _bookmarkIcon = Icons.Material.Filled.BookmarkBorder;
+
+    MudMessageBox mbox { get; set; }
 
     [CascadingParameter]
     private Task<AuthenticationState> authenticationStateTask { get; set; }
@@ -100,5 +115,18 @@
                 _bookmarkIcon = Icons.Material.Filled.BookmarkBorder;
             }
         }
+    }
+
+    async void OnButtonClicked()
+    {
+        await mbox.Show();
+
+        using var context = DBFactory.CreateDbContext();
+
+        var entity = context.Books.FirstOrDefault(item => item.Id == Id);
+
+        context.Books.Remove(entity);
+
+        context.SaveChanges();
     }
 }
