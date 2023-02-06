@@ -5,6 +5,7 @@
 @using Microsoft.EntityFrameworkCore
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IDbContextFactory<ContextDb> DBFactory
+@inject DatabaseService Database
 
 <MudCard Width="300px">
     <MudCardMedia Image=@ImageURL Height="200"/>
@@ -114,30 +115,24 @@
     {
         if (user.Identity.IsAuthenticated)
         {
-            using var context = DBFactory.CreateDbContext();
-
             if (ReservedBy == null)
             {
-                var entity = context.Books.FirstOrDefault(item => item.Id == Id);
+                var entity = Database.GetBookById(Id);
 
-                context.Entry(entity).CurrentValues.SetValues(entity.ReservedBy = userId);
+                entity.ReservedBy = userId;
 
-                context.SaveChanges();
+                Database.UpdateBook(Id, entity);
 
                 ReservedBy = userId;
                 _bookmarkIcon = Icons.Material.Filled.Bookmark;
             }
             else if (ReservedBy == userId)
             {
-                var entity = context.Books.FirstOrDefault(item => item.Id == Id);
-
-                var entry = context.Entry(entity).CurrentValues;
+                var entity = Database.GetBookById(Id);
 
                 entity.ReservedBy = null;
 
-                entry.SetValues(entity);
-
-                context.SaveChanges();
+                Database.UpdateBook(Id, entity);
 
                 ReservedBy = null;
                 _bookmarkIcon = Icons.Material.Filled.BookmarkBorder;
@@ -149,12 +144,6 @@
     {
         await mbox.Show();
 
-        using var context = DBFactory.CreateDbContext();
-
-        var entity = context.Books.FirstOrDefault(item => item.Id == Id);
-
-        context.Books.Remove(entity);
-
-        context.SaveChanges();
+        Database.DeleteBook(Id);
     }
 }
