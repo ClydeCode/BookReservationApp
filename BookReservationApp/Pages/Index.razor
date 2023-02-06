@@ -3,7 +3,7 @@
 @using BookReservationApp.Data
 @using BookReservationApp.Data.Models
 @using Microsoft.EntityFrameworkCore
-@inject IDbContextFactory<ContextDb> DBFactory
+@inject DatabaseService Database
 
 <MudText Typo="Typo.h4" Class="pb-3">Knygos</MudText>
 
@@ -25,10 +25,7 @@
 
 	protected override async Task OnInitializedAsync()
 	{
-		using var context = DBFactory.CreateDbContext();
-
-		if (context is not null && context.Books is not null) 
-			Books = context.Books.ToList();
+		Books = Database.GetBooks();
 
 		await base.OnInitializedAsync();
 	}
