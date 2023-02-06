@@ -4,7 +4,6 @@
 @using System.Security.Claims;
 @using Microsoft.EntityFrameworkCore
 @inject AuthenticationStateProvider AuthenticationStateProvider
-@inject IDbContextFactory<ContextDb> DBFactory
 @inject DatabaseService Database
 
 <MudCard Width="300px">
@@ -60,9 +59,7 @@
     {
         AuthenticateUser();
 
-        using var context = DBFactory.CreateDbContext();
-
-        if (context.Favorites.FirstOrDefault(item => item.UserId == userId && item.BookId == Id) != null) isFavorite = true;
+        if (Database.GetFavoriteByIdAndUserId(Id, userId) != null) isFavorite = true;
 
         _favoriteIcon = isFavorite == false ?
             Icons.Material.Filled.FavoriteBorder : Icons.Material.Filled.Favorite;
@@ -86,23 +83,15 @@
     {
         if (user.Identity.IsAuthenticated)
         {
-            using var context = DBFactory.CreateDbContext();
-
             if (!isFavorite)
             {
-                context.Favorites.Add(new FavoriteModel { UserId = userId, BookId = Id });
-
-                context.SaveChanges();
+                Database.AddFavorite(new FavoriteModel { UserId = userId, BookId = Id });
 
                 isFavorite = true;
             }
             else
             {
-                var entity = context.Favorites.FirstOrDefault(item => item.UserId == userId && item.BookId == Id);
-
-                context.Favorites.Remove(entity);
-
-                context.SaveChanges();
+                Database.DeleteFavoriteByIdAndUserId(Id, userId);
 
                 isFavorite = false;
             }
