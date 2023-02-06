@@ -13,4 +13,5 @@ public class BookModel
     public DateTime CreatedAt { get; set; }
 
     public UserModel User { get; set; }
+    public FavoriteModel Favorite { get; set; }
 }
