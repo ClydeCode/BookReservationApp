@@ -12,6 +12,13 @@ namespace BookReservationApp.Data
 			_DBFactory = DBFactory;
 		}
 
+		public List<BookModel> GetBooks()
+		{
+			using var context = _DBFactory.CreateDbContext();
+
+			return context.Books.ToList();
+		}
+
 		public BookModel GetBookById(int Id)
 		{
 			using var context = _DBFactory.CreateDbContext();
@@ -49,5 +56,50 @@ namespace BookReservationApp.Data
 
 			context.SaveChanges();
 		}
-	}
+
+		public List<FavoriteModel> GetFavorites()
+		{
+			using var context = _DBFactory.CreateDbContext();
+
+			return context.Favorites.ToList();
+		}
+
+        public FavoriteModel GetFavoriteByIdAndUserId(int BookId, string UserId)
+        {
+            using var context = _DBFactory.CreateDbContext();
+
+            return context.Favorites.FirstOrDefault(item => item.BookId == BookId && item.UserId == UserId);
+        }
+
+        public void AddFavorite(FavoriteModel favoriteModel)
+        {
+            using var context = _DBFactory.CreateDbContext();
+
+            context.Favorites.Add(favoriteModel);
+
+            context.SaveChanges();
+        }
+
+        public void UpdateFavorite(int Id, FavoriteModel favoriteModel)
+        {
+            using var context = _DBFactory.CreateDbContext();
+
+            var entity = context.Favorites.FirstOrDefault(item => item.Id == Id);
+
+            context.Entry(entity).CurrentValues.SetValues(favoriteModel);
+
+            context.SaveChanges();
+        }
+
+        public void DeleteFavoriteByIdAndUserId(int BookId, string UserId)
+        {
+            using var context = _DBFactory.CreateDbContext();
+
+            var entity = context.Favorites.FirstOrDefault(item => item.BookId == BookId && item.UserId == UserId);
+
+            context.Favorites.Remove(entity);
+
+            context.SaveChanges();
+        }
+    }
 }
