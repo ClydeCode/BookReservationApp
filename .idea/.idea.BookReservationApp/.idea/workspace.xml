@@ -8,6 +8,10 @@
   <component name="ChangeListManager">
     <list default="true" id="f85a2fb3-a45a-4b6a-949c-2f7db689b648" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.BookReservationApp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.BookReservationApp/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BookReservationApp/BookReservationApp.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/BookReservationApp/BookReservationApp.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BookReservationApp/Pages/Index.razor" beforeDir="false" afterPath="$PROJECT_DIR$/BookReservationApp/Pages/Index.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BookReservationApp/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BookReservationApp/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BookReservationApp/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/BookReservationApp/appsettings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BookReservationApp/bin/Debug/net7.0/BookReservationApp.dll" beforeDir="false" afterPath="$PROJECT_DIR$/BookReservationApp/bin/Debug/net7.0/BookReservationApp.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BookReservationApp/obj/Debug/net7.0/BookReservationApp.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/BookReservationApp/obj/Debug/net7.0/BookReservationApp.pdb" afterDir="false" />
     </list>
@@ -15,6 +19,10 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/DataAccessLibrary/BookAccess.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/DataAccessLibrary/Data/Models/BookModel.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -103,6 +111,12 @@
       <option name="presentableId" value="Default" />
       <updated>1674562969408</updated>
       <workItem from="1674562971164" duration="4285000" />
+      <workItem from="1674650417178" duration="595000" />
+      <workItem from="1674730008830" duration="5936000" />
+      <workItem from="1674749720374" duration="18000" />
+      <workItem from="1674759759780" duration="851000" />
+      <workItem from="1674766369886" duration="45000" />
+      <workItem from="1674800101153" duration="2009000" />
     </task>
     <servers />
   </component>
