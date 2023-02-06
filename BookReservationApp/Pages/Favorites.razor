@@ -1,0 +1,14 @@
+﻿@page "/favorites"
+@using BookReservationApp.Pages.Account
+@using Microsoft.AspNetCore.Components.Authorization
+
+<CascadingAuthenticationState>
+	<AuthorizeView>
+		<Authorized>
+			<h1>Išsaugoti</h1>
+		</Authorized>
+		<NotAuthorized>
+			<RedirectToLogin />
+		</NotAuthorized>
+	</AuthorizeView>
+</CascadingAuthenticationState>
