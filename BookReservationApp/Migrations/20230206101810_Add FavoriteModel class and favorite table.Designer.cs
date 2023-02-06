@@ -4,6 +4,7 @@ using BookReservationApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookReservationApp.Migrations
 {
     [DbContext(typeof(ContextDb))]
-    partial class ContextDbModelSnapshot : ModelSnapshot
+    [Migration("20230206101810_Add FavoriteModel class and favorite table")]
+    partial class AddFavoriteModelclassandfavoritetable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,20 +57,12 @@ namespace BookReservationApp.Migrations
 
             modelBuilder.Entity("BookReservationApp.Data.Models.FavoriteModel", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
                     b.Property<int>("BookId")
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
 
                     b.HasIndex("BookId");
 
@@ -170,15 +165,15 @@ namespace BookReservationApp.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f625b892-5880-4f6f-b818-5806397b7a0a",
-                            ConcurrencyStamp = "1d676aeb-3ded-4185-9d99-83444a8d5361",
+                            Id = "121b7952-ca49-45cb-b008-e09c2ae1476a",
+                            ConcurrencyStamp = "adf29d60-fdfc-40c3-884c-62086134b080",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "874a13da-09a4-460b-a439-742969120a32",
-                            ConcurrencyStamp = "222422fb-a60d-4ae5-8d33-6550cfd1b0a2",
+                            Id = "bf64eb55-611d-4a89-8913-2f4a507d239a",
+                            ConcurrencyStamp = "4b3d30af-a3a9-4323-898e-47d427f154a3",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
