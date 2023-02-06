@@ -13,8 +13,8 @@
         <MudText Typo="Typo.body2">@Description</MudText>
     </MudCardContent>
     <MudCardActions>
-        <MudIconButton Icon="@_bookmarkIcon" OnClick="ReserveToggle" Color="Color.Primary" aria-label="add to reservations"></MudIconButton>
-        <MudIconButton Icon="@_favoriteIcon" OnClick="FavoriteToggle" Color="Color.Secondary" aria-label="add to favorite"></MudIconButton>
+        <MudIconButton Icon="@BookmarkIcon" OnClick="ReserveToggle" Color="Color.Primary" aria-label="add to reservations"></MudIconButton>
+        <MudIconButton Icon="@FavoriteIcon" OnClick="FavoriteToggle" Color="Color.Secondary" aria-label="add to favorite"></MudIconButton>
         <AuthorizeView Roles="Admin">
             <Authorized>
                 <MudIconButton Class="ml-auto" Icon="@Icons.Material.Filled.Delete" OnClick="OnButtonClicked" Color="Color.Secondary" aria-label="delete"></MudIconButton>
@@ -43,10 +43,10 @@
     public string? Description { get; set; }
     [Parameter]
     public string? ReservedBy { get; set; }
-    public bool isFavorite { get; set; }
+    public bool IsFavorite { get; set; }
 
-    string _favoriteIcon = Icons.Material.Filled.FavoriteBorder;
-    string _bookmarkIcon = Icons.Material.Filled.BookmarkBorder;
+    string FavoriteIcon = Icons.Material.Filled.FavoriteBorder;
+    string BookmarkIcon = Icons.Material.Filled.BookmarkBorder;
 
     MudMessageBox mbox { get; set; }
 
@@ -59,12 +59,12 @@
     {
         AuthenticateUser();
 
-        if (Database.GetFavoriteByIdAndUserId(Id, userId) != null) isFavorite = true;
+        if (Database.GetFavoriteByIdAndUserId(Id, userId) != null) IsFavorite = true;
 
-        _favoriteIcon = isFavorite == false ?
+        FavoriteIcon = IsFavorite == false ?
             Icons.Material.Filled.FavoriteBorder : Icons.Material.Filled.Favorite;
 
-        _bookmarkIcon = ReservedBy == null ?
+        BookmarkIcon = ReservedBy == null ?
             Icons.Material.Filled.BookmarkBorder : ReservedBy == userId ?
                 Icons.Material.Filled.Bookmark : Icons.Material.Filled.Bookmarks;
 
@@ -83,19 +83,19 @@
     {
         if (user.Identity.IsAuthenticated)
         {
-            if (!isFavorite)
+            if (!IsFavorite)
             {
                 Database.AddFavorite(new FavoriteModel { UserId = userId, BookId = Id });
 
-                isFavorite = true;
+                IsFavorite = true;
             }
             else
             {
                 Database.DeleteFavoriteByIdAndUserId(Id, userId);
 
-                isFavorite = false;
+                IsFavorite = false;
             }
-            _favoriteIcon = _favoriteIcon == Icons.Material.Filled.FavoriteBorder 
+            FavoriteIcon = FavoriteIcon == Icons.Material.Filled.FavoriteBorder 
                     ? Icons.Material.Filled.Favorite : Icons.Material.Filled.FavoriteBorder;  
         }
     }
@@ -113,7 +113,7 @@
                 Database.UpdateBook(Id, entity);
 
                 ReservedBy = userId;
-                _bookmarkIcon = Icons.Material.Filled.Bookmark;
+                BookmarkIcon = Icons.Material.Filled.Bookmark;
             }
             else if (ReservedBy == userId)
             {
@@ -124,7 +124,7 @@
                 Database.UpdateBook(Id, entity);
 
                 ReservedBy = null;
-                _bookmarkIcon = Icons.Material.Filled.BookmarkBorder;
+                BookmarkIcon = Icons.Material.Filled.BookmarkBorder;
             }
         }
     }
