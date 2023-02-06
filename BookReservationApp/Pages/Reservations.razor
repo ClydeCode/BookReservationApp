@@ -13,16 +13,16 @@
 		<Authorized>
 			<MudText Typo="Typo.h4" Class="pb-3">Rezervacijos</MudText>
 
-			@foreach (var book in Books)
-			{
-				<BookCard 
-					  ImageURL=@book.ImageURL
-					  Id=@book.Id
-					  Title=@book.Title
-					  Description=@book.Description
-					  ReservedBy=@book.ReservedBy 
-				/>
-			}
+			<MudContainer MaxWidth="MaxWidth.False" Class="d-flex gap-10 flex-wrap">
+				@foreach (var book in Books)
+				{
+					<BookCard Id=@book.Id
+						  ImageURL=@book.ImageURL
+						  Title=@book.Title
+						  Description=@book.Description
+						  ReservedBy=@book.ReservedBy />
+				}
+			</MudContainer>
 		</Authorized>
 		<NotAuthorized>
 			<RedirectToLogin />
