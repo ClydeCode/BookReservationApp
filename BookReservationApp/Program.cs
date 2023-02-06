@@ -11,6 +11,8 @@ builder.Services.AddMudServices();
 builder.Services.AddDbContextFactory<ContextDb>(opt => 
     opt.UseSqlServer(builder.Configuration.GetConnectionString("DbContext")));
 
+builder.Services.AddSingleton<DatabaseService>();
+
 builder.Services.AddDefaultIdentity<UserModel>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ContextDb>();
