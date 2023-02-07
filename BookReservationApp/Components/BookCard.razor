@@ -98,7 +98,7 @@
     {
         if (User.Identity.IsAuthenticated)
         {
-            if (ReservedBy == null)
+            if (Database.GetBookById(Id).ReservedBy == null)
             {
                 var entity = Database.GetBookById(Id);
 
@@ -108,7 +108,7 @@
 
                 ReservedBy = UserId;
             }
-            else if (ReservedBy == UserId)
+            else if (Database.GetBookById(Id).ReservedBy == UserId)
             {
                 var entity = Database.GetBookById(Id);
 
