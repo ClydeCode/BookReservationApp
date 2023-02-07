@@ -52,14 +52,14 @@
 
     [CascadingParameter]
     private Task<AuthenticationState> authenticationStateTask { get; set; }
-    private ClaimsPrincipal user { get; set; }
-    private string userId { get; set; }
+    private ClaimsPrincipal User { get; set; }
+    private string UserId { get; set; }
 
     protected override void OnInitialized()
     {
         AuthenticateUser();
 
-        if (Database.GetFavoriteByIdAndUserId(Id, userId) != null) IsFavorite = true;
+        if (Database.GetFavoriteByIdAndUserId(Id, UserId) != null) IsFavorite = true;
 
         UpdateIcons();
 
@@ -69,24 +69,24 @@
     async void AuthenticateUser()
     {
         var authState = await authenticationStateTask;
-        user = authState.User;
+        User = authState.User;
 
-        userId = user.FindFirstValue(ClaimTypes.NameIdentifier);
+        UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
     }
 
     void FavoriteToggle()
     {
-        if (user.Identity.IsAuthenticated)
+        if (User.Identity.IsAuthenticated)
         {
             if (!IsFavorite)
             {
-                Database.AddFavorite(new FavoriteModel { UserId = userId, BookId = Id });
+                Database.AddFavorite(new FavoriteModel { UserId = UserId, BookId = Id });
 
                 IsFavorite = true;
             }
             else
             {
-                Database.DeleteFavoriteByIdAndUserId(Id, userId);
+                Database.DeleteFavoriteByIdAndUserId(Id, UserId);
 
                 IsFavorite = false;
             }
@@ -96,19 +96,19 @@
 
     void ReserveToggle()
     {
-        if (user.Identity.IsAuthenticated)
+        if (User.Identity.IsAuthenticated)
         {
             if (ReservedBy == null)
             {
                 var entity = Database.GetBookById(Id);
 
-                entity.ReservedBy = userId;
+                entity.ReservedBy = UserId;
 
                 Database.UpdateBook(Id, entity);
 
-                ReservedBy = userId;
+                ReservedBy = UserId;
             }
-            else if (ReservedBy == userId)
+            else if (ReservedBy == UserId)
             {
                 var entity = Database.GetBookById(Id);
 
@@ -128,7 +128,7 @@
             Icons.Material.Filled.FavoriteBorder : Icons.Material.Filled.Favorite;
 
         BookmarkIcon = ReservedBy == null ?
-            Icons.Material.Filled.BookmarkBorder : ReservedBy == userId ?
+            Icons.Material.Filled.BookmarkBorder : ReservedBy == UserId ?
                 Icons.Material.Filled.Bookmark : Icons.Material.Filled.Bookmarks;
     }
 
