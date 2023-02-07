@@ -61,12 +61,7 @@
 
         if (Database.GetFavoriteByIdAndUserId(Id, userId) != null) IsFavorite = true;
 
-        FavoriteIcon = IsFavorite == false ?
-            Icons.Material.Filled.FavoriteBorder : Icons.Material.Filled.Favorite;
-
-        BookmarkIcon = ReservedBy == null ?
-            Icons.Material.Filled.BookmarkBorder : ReservedBy == userId ?
-                Icons.Material.Filled.Bookmark : Icons.Material.Filled.Bookmarks;
+        UpdateIcons();
 
         base.OnInitialized();
     }
@@ -127,6 +122,16 @@
                 BookmarkIcon = Icons.Material.Filled.BookmarkBorder;
             }
         }
+    }
+
+    void UpdateIcons()
+    {
+        FavoriteIcon = IsFavorite == false ?
+            Icons.Material.Filled.FavoriteBorder : Icons.Material.Filled.Favorite;
+
+        BookmarkIcon = ReservedBy == null ?
+            Icons.Material.Filled.BookmarkBorder : ReservedBy == userId ?
+                Icons.Material.Filled.Bookmark : Icons.Material.Filled.Bookmarks;
     }
 
     async void HandleDeleteBox()
