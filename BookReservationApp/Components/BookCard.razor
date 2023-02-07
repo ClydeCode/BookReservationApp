@@ -90,8 +90,7 @@
 
                 IsFavorite = false;
             }
-            FavoriteIcon = FavoriteIcon == Icons.Material.Filled.FavoriteBorder 
-                    ? Icons.Material.Filled.Favorite : Icons.Material.Filled.FavoriteBorder;  
+            UpdateIcons();
         }
     }
 
@@ -108,7 +107,6 @@
                 Database.UpdateBook(Id, entity);
 
                 ReservedBy = userId;
-                BookmarkIcon = Icons.Material.Filled.Bookmark;
             }
             else if (ReservedBy == userId)
             {
@@ -119,8 +117,8 @@
                 Database.UpdateBook(Id, entity);
 
                 ReservedBy = null;
-                BookmarkIcon = Icons.Material.Filled.BookmarkBorder;
             }
+            UpdateIcons();
         }
     }
 
