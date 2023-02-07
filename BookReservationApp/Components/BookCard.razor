@@ -17,7 +17,7 @@
         <MudIconButton Icon="@FavoriteIcon" OnClick="FavoriteToggle" Color="Color.Secondary" aria-label="add to favorite"></MudIconButton>
         <AuthorizeView Roles="Admin">
             <Authorized>
-                <MudIconButton Class="ml-auto" Icon="@Icons.Material.Filled.Delete" OnClick="OnButtonClicked" Color="Color.Secondary" aria-label="delete"></MudIconButton>
+                <MudIconButton Class="ml-auto" Icon="@Icons.Material.Filled.Delete" OnClick="HandleDeleteBox" Color="Color.Secondary" aria-label="delete"></MudIconButton>
             </Authorized>
         </AuthorizeView>
     </MudCardActions>
@@ -28,7 +28,7 @@
         Ar tikrai <b><i>norite</i></b> ištrinti?
     </MessageContent>
     <YesButton>
-        <MudButton Variant="Variant.Filled" Color="Color.Error" StartIcon="@Icons.Material.Filled.DeleteForever">Ištrinti</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Error" StartIcon="@Icons.Material.Filled.DeleteForever" OnClick="() => Database.DeleteBook(Id)">Ištrinti</MudButton>
     </YesButton>
 </MudMessageBox>
 
@@ -129,10 +129,8 @@
         }
     }
 
-    async void OnButtonClicked()
+    async void HandleDeleteBox()
     {
         await mbox.Show();
-
-        Database.DeleteBook(Id);
     }
 }
