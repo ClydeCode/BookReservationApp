@@ -43,6 +43,8 @@
     public string? Description { get; set; }
     [Parameter]
     public string? ReservedBy { get; set; }
+    [Parameter]
+    public float TrackingNumber { get; set; }
     public bool IsFavorite { get; set; }
 
     string FavoriteIcon = Icons.Material.Filled.FavoriteBorder;
@@ -98,7 +100,7 @@
     {
         if (User.Identity.IsAuthenticated)
         {
-            if (Database.GetBookById(Id).ReservedBy == null)
+            if (ReservedBy == null)
             {
                 var entity = Database.GetBookById(Id);
 
@@ -108,7 +110,7 @@
 
                 ReservedBy = UserId;
             }
-            else if (Database.GetBookById(Id).ReservedBy == UserId)
+            else if (ReservedBy == UserId)
             {
                 var entity = Database.GetBookById(Id);
 
