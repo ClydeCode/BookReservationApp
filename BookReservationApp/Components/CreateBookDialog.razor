@@ -1,7 +1,7 @@
 ﻿@using BookReservationApp.Data.Models;
 @using Microsoft.AspNetCore.Components.Authorization;
 @using Microsoft.EntityFrameworkCore
-@inject IDbContextFactory<ContextDb> DBFactory
+@inject DatabaseService Database
 
 <MudDialog Style="width: 500px">
     <DialogContent>
@@ -22,8 +22,6 @@
     public string Description { get; set; }
 
     void Submit() {
-        using var context = DBFactory.CreateDbContext();
-
         var book = new BookModel
         {
             ImageURL = ImageURL,
@@ -32,8 +30,7 @@
             CreatedAt = DateTime.Now
         };
 
-        context.Books.Add(book);
-        context.SaveChanges();
+        Database.AddBook(book);
 
         MudDialog.Close(DialogResult.Ok(true));
     }
