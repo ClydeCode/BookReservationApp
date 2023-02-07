@@ -7,7 +7,9 @@ namespace BookReservationApp.Data
 	{
 		private readonly IDbContextFactory<ContextDb> _DBFactory;
 
-		public DatabaseService(IDbContextFactory<ContextDb> DBFactory) 
+        public event EventHandler<IEnumerable<BookModel>> DatabaseChanged;
+
+        public DatabaseService(IDbContextFactory<ContextDb> DBFactory) 
 		{ 
 			_DBFactory = DBFactory;
 		}
@@ -31,9 +33,10 @@ namespace BookReservationApp.Data
 			using var context = _DBFactory.CreateDbContext();
 
 			context.Books.Add(bookModel);
-
 			context.SaveChanges();
-		}
+
+            DatabaseChanged?.Invoke(this, GetBooks());
+        }
 
 		public void UpdateBook(int Id, BookModel bookModel) 
 		{
@@ -44,7 +47,9 @@ namespace BookReservationApp.Data
 			context.Entry(entity).CurrentValues.SetValues(bookModel);
 
 			context.SaveChanges();
-		}
+
+            DatabaseChanged?.Invoke(this, GetBooks());
+        }
 
 		public void DeleteBook(int Id)
 		{
@@ -55,7 +60,9 @@ namespace BookReservationApp.Data
 			context.Books.Remove(entity);
 
 			context.SaveChanges();
-		}
+
+            DatabaseChanged?.Invoke(this, GetBooks());
+        }
 
 		public List<FavoriteModel> GetFavorites()
 		{

@@ -27,7 +27,19 @@
 	{
 		Books = Database.GetBooks();
 
+		Database.DatabaseChanged += DatabaseChanged;
+
 		await base.OnInitializedAsync();
+	}
+
+	private async void DatabaseChanged(object sender, IEnumerable<BookModel> books)
+	{
+		await InvokeAsync(() =>
+		{
+			Books = books;
+
+			StateHasChanged();
+		});
 	}
 }
 
