@@ -2,8 +2,11 @@
 
 It's a Book Reservation App. In this app you can reserve your desired books. This App has basic Register/Login functionalities. For authentication it uses XSRF token.
 
+### Real-Time Synchronization
 
-Features:
+[![Image from Gyazo](https://i.gyazo.com/09c4a7ed87a1a895d9535cd78ed4a6fd.gif)](https://gyazo.com/09c4a7ed87a1a895d9535cd78ed4a6fd)
+
+### More Features:
 
 1. Books Reservation
 2. Favorites Book List
