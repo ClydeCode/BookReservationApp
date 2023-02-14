@@ -1,0 +1,62 @@
+﻿@using BookReservationApp.Data.Models;
+
+@if (currentPage == 1) 
+{
+	
+
+	if (Books.Count > 5)
+	{
+		@for (int n = 0; n < 5; n++)
+		{
+			<BookCard Id=@Books[n].Id
+		  ImageURL=@Books[n].ImageURL
+		  Title=@Books[n].Title
+		  Description=@Books[n].Description
+		  ReservedBy=@Books[n].ReservedBy />
+		}
+	} else
+	{
+		@for (int n = 0; n < _itemsPerPage - (_itemsPerPage - Books.Count); n++)
+		{
+			<BookCard Id=@Books[n].Id
+		  ImageURL=@Books[n].ImageURL
+		  Title=@Books[n].Title
+		  Description=@Books[n].Description
+		  ReservedBy=@Books[n].ReservedBy />
+		}
+	}
+} 
+else
+{
+	@for (int n = _itemsPerPage * currentPage - _itemsPerPage; n < _itemsPerPage * currentPage - (_itemsPerPage * currentPage - Books.Count); n++)
+	{
+		<BookCard Id=@Books[n].Id
+			ImageURL=@Books[n].ImageURL
+			Title=@Books[n].Title
+			Description=@Books[n].Description
+			ReservedBy=@Books[n].ReservedBy 
+		/>
+	}
+}
+
+<MudPagination SelectedChanged="PageChanged" Count="CountPages()" Class="pa-4 mt-auto" />
+
+@code {
+	[Parameter]
+	public List<BookModel>? Books { get; set; }
+
+	private int _itemsPerPage = 5;
+	private int currentPage = 1;
+
+	void PageChanged(int n)
+	{
+		currentPage += 1;
+	}
+
+	int CountPages()
+	{
+		double value = Math.Round((Books.Count / Convert.ToDouble(_itemsPerPage)), 0, MidpointRounding.ToPositiveInfinity);
+
+		return Convert.ToInt32(value);
+	}
+}
