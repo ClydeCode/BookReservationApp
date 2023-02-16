@@ -1,42 +1,15 @@
 ﻿@using BookReservationApp.Data.Models;
 
-@if (currentPage == 1) 
+@for (int n = _itemsPerPage * currentPage - _itemsPerPage; n < _itemsPerPage * currentPage - (_itemsPerPage * currentPage - Books.Count); n++)
 {
-	
+	if ((_itemsPerPage * currentPage) == n) break;
 
-	if (Books.Count > 5)
-	{
-		@for (int n = 0; n < 5; n++)
-		{
-			<BookCard Id=@Books[n].Id
-		  ImageURL=@Books[n].ImageURL
-		  Title=@Books[n].Title
-		  Description=@Books[n].Description
-		  ReservedBy=@Books[n].ReservedBy />
-		}
-	} else
-	{
-		@for (int n = 0; n < _itemsPerPage - (_itemsPerPage - Books.Count); n++)
-		{
-			<BookCard Id=@Books[n].Id
-		  ImageURL=@Books[n].ImageURL
-		  Title=@Books[n].Title
-		  Description=@Books[n].Description
-		  ReservedBy=@Books[n].ReservedBy />
-		}
-	}
-} 
-else
-{
-	@for (int n = _itemsPerPage * currentPage - _itemsPerPage; n < _itemsPerPage * currentPage - (_itemsPerPage * currentPage - Books.Count); n++)
-	{
-		<BookCard Id=@Books[n].Id
-			ImageURL=@Books[n].ImageURL
-			Title=@Books[n].Title
-			Description=@Books[n].Description
-			ReservedBy=@Books[n].ReservedBy 
-		/>
-	}
+	<BookCard Id=@Books[n].Id
+		ImageURL=@Books[n].ImageURL
+		Title=@Books[n].Title
+		Description=@Books[n].Description
+		ReservedBy=@Books[n].ReservedBy 
+	/>	
 }
 
 <MudPagination SelectedChanged="PageChanged" Count="CountPages()" Class="pa-4 mt-auto" />
@@ -45,12 +18,12 @@ else
 	[Parameter]
 	public List<BookModel>? Books { get; set; }
 
-	private int _itemsPerPage = 5;
+	private int _itemsPerPage = 8;
 	private int currentPage = 1;
 
 	void PageChanged(int n)
 	{
-		currentPage += 1;
+		currentPage = n;
 	}
 
 	int CountPages()
