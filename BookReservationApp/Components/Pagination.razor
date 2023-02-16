@@ -1,0 +1,37 @@
+﻿@using BookReservationApp.Data.Models;
+
+<MudContainer MaxWidth="MaxWidth.False" Class="d-flex gap-10 flex-wrap">
+	@for (int n = _itemsPerPage * currentPage - _itemsPerPage; n < _itemsPerPage * currentPage - (_itemsPerPage * currentPage - Books.Count); n++)
+	{
+		if ((_itemsPerPage * currentPage) == n) break;
+
+		<BookCard Id=@Books[n].Id
+			ImageURL=@Books[n].ImageURL
+			Title=@Books[n].Title
+			Description=@Books[n].Description
+			ReservedBy=@Books[n].ReservedBy 
+		/>	
+	}
+</MudContainer>
+
+<MudPagination SelectedChanged="PageChanged" Count="CountPages()" Class="pa-4 mt-3 justify-center" />
+
+@code {
+	[Parameter]
+	public List<BookModel>? Books { get; set; }
+
+	private const int _itemsPerPage = 8;
+	private int currentPage = 1;
+
+	void PageChanged(int n)
+	{
+		currentPage = n;
+	}
+
+	int CountPages()
+	{
+		double value = Math.Round((Books.Count / Convert.ToDouble(_itemsPerPage)), 0, MidpointRounding.ToPositiveInfinity);
+
+		return Convert.ToInt32(value);
+	}
+}

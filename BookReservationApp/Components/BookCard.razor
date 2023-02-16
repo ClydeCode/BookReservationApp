@@ -61,11 +61,18 @@
     {
         AuthenticateUser();
 
+        base.OnInitialized();
+    }
+
+    protected override void OnParametersSet()
+    {
+        IsFavorite = false;
+
         if (Database.GetFavoriteByIdAndUserId(Id, UserId) != null) IsFavorite = true;
 
         UpdateIcons();
 
-        base.OnInitialized();
+        base.OnParametersSet();
     }
 
     async void AuthenticateUser()

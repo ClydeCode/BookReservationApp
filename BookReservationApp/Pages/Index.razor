@@ -7,21 +7,12 @@
 
 <MudText Typo="Typo.h4" Class="pb-3">Knygos</MudText>
 
-<MudContainer MaxWidth="MaxWidth.False" Class="d-flex gap-10 flex-wrap">
-	@foreach (var book in Books)
-	{
-		<BookCard 
-			Id=@book.Id
-			ImageURL=@book.ImageURL
-			Title=@book.Title
-			Description=@book.Description
-			ReservedBy=@book.ReservedBy
-		/>
-	}
+<MudContainer MaxWidth="MaxWidth.False" Class="d-flex flex-column">
+	<Pagination Books="@Books" />
 </MudContainer>
 
 @code {
-	IEnumerable<BookModel>? Books;
+	public List<BookModel>? Books;
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -32,7 +23,7 @@
 		await base.OnInitializedAsync();
 	}
 
-	private async void DatabaseChanged(object sender, IEnumerable<BookModel> books)
+	private async void DatabaseChanged(object sender, List<BookModel> books)
 	{
 		await InvokeAsync(() =>
 		{

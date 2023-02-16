@@ -7,7 +7,7 @@ namespace BookReservationApp.Data
 	{
 		private readonly IDbContextFactory<ContextDb> _DBFactory;
 
-        public event EventHandler<IEnumerable<BookModel>> DatabaseChanged;
+        public event EventHandler<List<BookModel>> DatabaseChanged;
 
         public DatabaseService(IDbContextFactory<ContextDb> DBFactory) 
 		{ 
