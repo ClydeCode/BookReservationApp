@@ -25,7 +25,7 @@
     </MudCardActions>
 </MudCard>
 
-<MudMessageBox @ref="mbox" Title="Attention!" CancelText="Cancel" Style="width: 500px">
+<MudMessageBox @ref="DeleteMessageBox" Title="Attention!" CancelText="Cancel" Style="width: 500px">
     <MessageContent>
         Do you want to <b><i>delete</i></b> this book?
     </MessageContent>
@@ -52,10 +52,10 @@
     string FavoriteIcon = Icons.Material.Filled.FavoriteBorder;
     string BookmarkIcon = Icons.Material.Filled.BookmarkBorder;
 
-    MudMessageBox mbox { get; set; }
+    MudMessageBox DeleteMessageBox { get; set; }
 
     [CascadingParameter]
-    private Task<AuthenticationState> authenticationStateTask { get; set; }
+    private Task<AuthenticationState> AuthenticationStateTask { get; set; }
     private ClaimsPrincipal User { get; set; }
     private string UserId { get; set; }
 
@@ -79,7 +79,7 @@
 
     async void AuthenticateUser()
     {
-        var authState = await authenticationStateTask;
+        var authState = await AuthenticationStateTask;
         User = authState.User;
 
         UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -161,6 +161,6 @@
 
     async void HandleDeleteBox()
     {
-        await mbox.Show();
+        await DeleteMessageBox.Show();
     }
 }
