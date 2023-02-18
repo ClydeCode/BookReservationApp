@@ -1,11 +1,11 @@
 ﻿@page "/"
-@using BookReservationApp.Components
-@using BookReservationApp.Data
-@using BookReservationApp.Data.Models
-@using Microsoft.EntityFrameworkCore
-@inject DatabaseService Database
+@using BookReservationApp.Components;
+@using BookReservationApp.Data;
+@using BookReservationApp.Data.Models;
+@using Microsoft.EntityFrameworkCore;
+@inject DatabaseService Database;
 
-<MudText Typo="Typo.h4" Class="pb-3">Knygos</MudText>
+<MudText Typo="Typo.h4" Class="pb-3">Books</MudText>
 
 <MudContainer MaxWidth="MaxWidth.False" Class="d-flex flex-column">
 	<Pagination Books="@Books" />

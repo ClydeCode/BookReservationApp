@@ -9,7 +9,7 @@
     <div>
         <section>
             <form id="account" method="post">
-                <h2>Prisijunkite.</h2>
+                <h2>Login.</h2>
                 <hr />
                 <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                 <div class="form-floating mb-3">
@@ -29,11 +29,11 @@
                     </label>
                 </div>
                 <div>
-                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Prisijungti</button>
+                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Login</button>
                 </div>
                 <div>
                     <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Registruoti naują vartotoją</a>
+                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Create new account.</a>
                     </p>
                 </div>
             </form>

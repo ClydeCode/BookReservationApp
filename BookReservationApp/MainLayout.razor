@@ -1,21 +1,20 @@
-﻿@inherits LayoutComponentBase
+﻿@inherits LayoutComponentBase;
 @using BookReservationApp.Data.Models;
-@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.Authorization;
 @using Microsoft.AspNetCore.Identity;
-@using BookReservationApp.Components
-@inject IDialogService DialogService
+@using BookReservationApp.Components;
+@inject IDialogService DialogService;
 
 <MudThemeProvider/>
 <MudDialogProvider/>
 <MudSnackbarProvider/>
-
 
 <MudLayout>
     <MudAppBar>
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
         <AuthorizeView Roles="Admin">
             <Authorized>
-                <MudButton Class="ml-auto" Variant="Variant.Filled" Color="Color.Secondary" OnClick=@HandleClick>Pridėti knygą</MudButton>
+                <MudButton Class="ml-auto" Variant="Variant.Filled" Color="Color.Secondary" OnClick=@HandleClick>Add Book</MudButton>
             </Authorized>
         </AuthorizeView>
     </MudAppBar>
@@ -27,32 +26,32 @@
                         @context.User.Identity.Name
                     </Authorized>
                     <NotAuthorized>
-                        Svečias
+                        Guest
                     </NotAuthorized>
                 </AuthorizeView>
             </MudText>
             <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">
                 <AuthorizeView Roles="Admin">
                     <Authorized>
-                        Administratorius
+                        Administrator
                     </Authorized>
                     <NotAuthorized>
-                        Vartotojas
+                        User
                     </NotAuthorized>
                 </AuthorizeView>
             </MudText>
             <MudDivider Class="my-2"/>
-            <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Dashboard">Knygos</MudNavLink>
-            <MudNavLink Href="/reservations" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Bookmarks">Rezervuoti</MudNavLink>
-            <MudNavLink Href="/favorites" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Storage">Išsaugoti</MudNavLink>
-            <MudNavGroup Title="Autorizacija" Icon="@Icons.Material.Filled.Settings" @bind-Open="@_navOpen" OnClick="@NavToggle">
+            <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Dashboard">Books</MudNavLink>
+            <MudNavLink Href="/reservations" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Bookmarks">Reservations</MudNavLink>
+            <MudNavLink Href="/favorites" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Storage">Favorites</MudNavLink>
+            <MudNavGroup Title="Authorization" Icon="@Icons.Material.Filled.Settings" @bind-Open="@_navOpen" OnClick="@NavToggle">
                 <AuthorizeView>
                     <Authorized>
-                        <MudNavLink Href="/account/logout" Icon="@Icons.Material.Filled.Lock" IconColor="Color.Error">Atsijungti</MudNavLink>
+                        <MudNavLink Href="/account/logout" Icon="@Icons.Material.Filled.Lock" IconColor="Color.Error">Logout</MudNavLink>
                     </Authorized>
                     <NotAuthorized>
-                        <MudNavLink Href="/account/login" Icon="@Icons.Material.Filled.Lock" IconColor="Color.Success">Prisijungti</MudNavLink>
-                        <MudNavLink Href="/account/register" Icon="@Icons.Material.Filled.People" IconColor="Color.Info">Užsiregistruoti</MudNavLink>
+                        <MudNavLink Href="/account/login" Icon="@Icons.Material.Filled.Lock" IconColor="Color.Success">Login</MudNavLink>
+                        <MudNavLink Href="/account/register" Icon="@Icons.Material.Filled.People" IconColor="Color.Info">Register</MudNavLink>
                     </NotAuthorized>
                 </AuthorizeView>
             </MudNavGroup>
@@ -82,6 +81,6 @@
     {
         DialogOptions closeOnEscapeKey = new DialogOptions() { CloseOnEscapeKey = true };
 
-        DialogService.Show<CreateBookDialog>("Pridėti knygą", closeOnEscapeKey);
+        DialogService.Show<CreateBookDialog>("Add Book", closeOnEscapeKey);
     }
 }
