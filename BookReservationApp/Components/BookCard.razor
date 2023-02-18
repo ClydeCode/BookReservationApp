@@ -2,9 +2,10 @@
 @using Microsoft.AspNetCore.Authorization;
 @using Microsoft.AspNetCore.Components.Authorization;
 @using System.Security.Claims;
-@using Microsoft.EntityFrameworkCore
-@inject AuthenticationStateProvider AuthenticationStateProvider
-@inject DatabaseService Database
+@using Microsoft.EntityFrameworkCore;
+@inject AuthenticationStateProvider AuthenticationStateProvider;
+@inject DatabaseService Database;
+@inject IDialogService DialogService;
 
 <MudCard Width="300px">
     <MudCardMedia Image=@ImageURL Height="200"/>
@@ -17,18 +18,19 @@
         <MudIconButton Icon="@FavoriteIcon" OnClick="FavoriteToggle" Color="Color.Secondary" aria-label="add to favorite"></MudIconButton>
         <AuthorizeView Roles="Admin">
             <Authorized>
-                <MudIconButton Class="ml-auto" Icon="@Icons.Material.Filled.Delete" OnClick="HandleDeleteBox" Color="Color.Secondary" aria-label="delete"></MudIconButton>
+                <MudIconButton Class="ml-auto" Icon="@Icons.Material.Filled.Edit" OnClick="HandleEditDialog" Color="Color.Info" aria-label="edit"></MudIconButton>
+                <MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="HandleDeleteBox" Color="Color.Secondary" aria-label="delete"></MudIconButton>
             </Authorized>
         </AuthorizeView>
     </MudCardActions>
 </MudCard>
 
-<MudMessageBox @ref="mbox" Title="Ispėjimas" CancelText="Cancel" Style="width: 500px">
+<MudMessageBox @ref="mbox" Title="Attention!" CancelText="Cancel" Style="width: 500px">
     <MessageContent>
-        Ar tikrai <b><i>norite</i></b> ištrinti?
+        Do you want to <b><i>delete</i></b> this book?
     </MessageContent>
     <YesButton>
-        <MudButton Variant="Variant.Filled" Color="Color.Error" StartIcon="@Icons.Material.Filled.DeleteForever" OnClick="() => Database.DeleteBook(Id)">Ištrinti</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Error" StartIcon="@Icons.Material.Filled.DeleteForever" OnClick="() => Database.DeleteBook(Id)">Delete</MudButton>
     </YesButton>
 </MudMessageBox>
 
@@ -139,6 +141,22 @@
         BookmarkIcon = ReservedBy == null ?
             Icons.Material.Filled.BookmarkBorder : ReservedBy == UserId ?
                 Icons.Material.Filled.Bookmark : Icons.Material.Filled.Bookmarks;
+    }
+
+    async void HandleEditDialog()
+    {
+        var Book = new BookModel
+        {
+            Id = Id,
+            ImageURL = ImageURL,
+            Title = Title,
+            Description = Description
+        };
+
+        var parameters = new DialogParameters { ["Book"] = Book };
+
+        var dialog = await DialogService.ShowAsync<EditBookDialog>("Edit Book", parameters);
+        var result = await dialog.Result;
     }
 
     async void HandleDeleteBox()

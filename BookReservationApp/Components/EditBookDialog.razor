@@ -1,0 +1,37 @@
+﻿@using BookReservationApp.Data.Models;
+@inject DatabaseService Database;
+
+<MudDialog Style="width: 500px">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Edit" Class="mr-3 mb-n1" />
+            Edit Book
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudTextField @bind-Value="@Book.ImageURL" Label="Image_URL"/>
+        <MudTextField @bind-Value="@Book.Title" Label="Title" />
+        <MudTextField @bind-Value="@Book.Description" Label="Description" Lines="5" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Error" OnClick="Submit">Submit</MudButton>
+    </DialogActions>
+</MudDialog>
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    [Parameter] public BookModel Book { get; set; } = new BookModel();
+
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+
+    private void Submit()
+    {
+        Database.UpdateBook(Book.Id, Book);
+
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+}
