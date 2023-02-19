@@ -3,14 +3,6 @@
     "mssql1": {
       "type": "mssql.local",
       "connectionId": "ConnectionStrings:UserContextConnection"
-    },
-    "mssql2": {
-      "type": "mssql.local",
-      "connectionId": "ConnectionStrings:ContextDbbConnection"
-    },
-    "mssql3": {
-      "type": "mssql.local",
-      "connectionId": "ConnectionStrings:DbbContextConnection"
     }
   }
 }
