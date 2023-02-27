@@ -16,12 +16,24 @@
 
 <MudPagination SelectedChanged="PageChanged" Count="CountPages()" Class="pa-4 mt-3 justify-center" />
 
+@_drawerOpen
+
 @code {
 	[Parameter]
 	public List<BookModel>? Books { get; set; }
 
-	private const int _itemsPerPage = 8;
+	[CascadingParameter]
+	public bool _drawerOpen { get; set; }
+
+	public int _itemsPerPage { get; set; }
 	private int currentPage = 1;
+
+	protected override void OnParametersSet()
+	{
+		_itemsPerPage = _drawerOpen == true ? 8 : 10;
+
+		base.OnParametersSet();
+	}
 
 	void PageChanged(int n)
 	{

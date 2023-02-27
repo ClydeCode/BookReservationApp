@@ -57,9 +57,11 @@
             </MudNavGroup>
         </MudNavMenu>
     </MudDrawer>
-    <MudMainContent Class="pl-4 mt-5">
-        @Body
-    </MudMainContent>
+    <CascadingValue Value="@_drawerOpen">
+        <MudMainContent Class="pl-4 mt-5">
+            @Body
+        </MudMainContent>
+    </CascadingValue>  
 </MudLayout>
 
 
