@@ -16,8 +16,6 @@
 
 <MudPagination SelectedChanged="PageChanged" Count="CountPages()" Class="pa-4 mt-3 justify-center" />
 
-@_drawerOpen
-
 @code {
 	[Parameter]
 	public List<BookModel>? Books { get; set; }
