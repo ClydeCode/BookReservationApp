@@ -10,8 +10,8 @@
 <MudCard Width="311px" Height="600px">
     <MudCardMedia Image=@ImageURL Height="375"/>
     <MudCardContent Style="height: 150px">
-        <MudText Typo="Typo.h5">@Title</MudText>
-        <MudText Typo="Typo.body2">@Description</MudText>
+        <MudText Typo="Typo.h5" Style="margin-bottom: 5px">@Title</MudText>
+        <MudText Typo="Typo.body2" Style=@($"color: {Colors.Grey.Darken1}")>@Description</MudText>
     </MudCardContent>
     <MudCardActions>
         <MudIconButton Icon="@BookmarkIcon" OnClick="ReserveToggle" Color="Color.Primary" aria-label="add to reservations"></MudIconButton>
