@@ -4,7 +4,7 @@ https://bookreservationapp.azurewebsites.net/
 
 ## About The Project
 
-It's a Book Reservation App. In this app you can reserve your desired books. This App has basic Register/Login functionalities. For authentication it uses XSRF token.
+It is a Book Reservation App. In this app you can reserve your desired books. This App has basic Register/Login functionalities. For authentication it uses XSRF token.
 
 ### Real-Time Synchronization
 
